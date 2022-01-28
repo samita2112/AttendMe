@@ -37,7 +37,10 @@ class scanpage extends StatelessWidget {
                   width: 100.0,
                   margin: EdgeInsets.only(top: 100.0),
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                            context, '/attendancemarked');
+                      },
                       child: Text(
                         "SCAN",
                         style: TextStyle(color: Colors.white, fontSize: 20.0),

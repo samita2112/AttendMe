@@ -1,5 +1,6 @@
 // import 'dart:html';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class signup extends StatefulWidget {
@@ -27,7 +28,7 @@ class _signupState extends State<signup> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 450,
-                    color: Colors.teal[100],
+                    color: Colors.cyan[100],
                   ),
                   clipper: CustomClipPath(),
                 ),
@@ -135,7 +136,15 @@ class _signupState extends State<signup> {
                                 color: Colors.white,
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (role == 2) {
+                                Navigator.pushReplacementNamed(
+                                    context, '/studentsignup');
+                              } else {
+                                Navigator.pushReplacementNamed(
+                                    context, '/teachersignup');
+                              }
+                            },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.indigo[900]!),

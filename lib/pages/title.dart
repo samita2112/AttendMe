@@ -12,10 +12,8 @@ class _titleState extends State<title> {
   @override
   void initState() {
     super.initState();
-    Timer(
-      const Duration(seconds: 3),
-      () =>Navigator.pushReplacementNamed(context, '/login')
-    );
+    Timer(const Duration(seconds: 3),
+        () => Navigator.pushReplacementNamed(context, '/login'));
   }
 
   @override
@@ -28,8 +26,7 @@ class _titleState extends State<title> {
           height: MediaQuery.of(context).size.height * 1,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/title.png"),
-                  fit: BoxFit.cover)),
+                  image: AssetImage("assets/title.png"), fit: BoxFit.cover)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

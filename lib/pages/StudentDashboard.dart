@@ -56,7 +56,9 @@ class StudentDashboard extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: 70.0),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/scanpage');
+                },
                 child: Text(
                   'GIVE ATTENDANCE',
                   style: TextStyle(color: Colors.white, fontSize: 20.0),

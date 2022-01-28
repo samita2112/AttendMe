@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class login extends StatelessWidget {
@@ -16,15 +17,16 @@ class login extends StatelessWidget {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 450,
-                    color: Colors.teal[100],
+                    color: Colors.cyan[100],
                   ),
                   clipper: CustomClipPath(),
                 ),
                 const SizedBox(height: 20.0),
                 Form(
                   child: Container(
-                    padding: const EdgeInsets.only(left: 40.0, right: 80),
+                    padding: const EdgeInsets.only(left: 40.0, right: 40.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const TextField(
                           decoration: InputDecoration(
@@ -56,7 +58,10 @@ class login extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/admin_dashboard');
+                          },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.indigo[900]!),
@@ -65,6 +70,60 @@ class login extends StatelessWidget {
                       ],
                     ),
                   ),
+                ),
+                SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: const Text(
+                        "Don't have an Account",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.0,
+                            letterSpacing: 1.25),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        child: GestureDetector(
+                      child: RichText(
+                        text: TextSpan(
+                          text: '',
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'SIGNUP',
+                              style: TextStyle(
+                                  color: Colors.indigo[900],
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 14.0,
+                                  letterSpacing: 1.25),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/signup');
+                                },
+                            ),
+                            TextSpan(
+                              text: '  Here',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.0,
+                                  letterSpacing: 1.25),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ))
+                  ],
                 ),
               ],
             ),
@@ -80,6 +139,7 @@ class login extends StatelessWidget {
                     Container(
                       // padding: EdgeInsets.only(top: 100.0),
                       height: 350.0,
+                      width: 350,
 
                       decoration: const BoxDecoration(
                         image: DecorationImage(

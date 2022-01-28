@@ -18,7 +18,7 @@ class teachersignup extends StatelessWidget {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 300,
-                    color: Colors.blue,
+                    color: Colors.cyan[100],
                   ),
                   clipper: CustomClipPath(),
                 ),
@@ -78,7 +78,10 @@ class teachersignup extends StatelessWidget {
                         const SizedBox(height: 30),
                         FlatButton(
                           child: const Text("SIGN UP"),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/teacher_dashboard');
+                          },
                           textColor: Colors.white,
                           color: Colors.indigo[900],
                         )

@@ -25,18 +25,16 @@ class App extends StatelessWidget {
         // ignore: prefer_const_constructors
         //'/': (context) => title(),
 
-        '/': (context) => signup(),
-        //'/': (context) => login(),
-        // '/': (context) => title(),
-        // // '/': (context) => login(),
-        // '/admin_dashboard':(context)=> AdminDashboard(),
-        // '/teacher_dashboard':(context)=> TeacherDashboard(),
-        // '/login': (context) => login(),
-        // '/scanpage': (context) => scanpage(),
-        // '/attendancemarked': (context) => attendancemarked(),
-        // '/studentdashboard': (context) => StudentDashboard(),
-        // '/studentsignup': (context) => studentsignup(),
-        // '/teachersignup': (context) => teachersignup(),
+        '/': (context) => title(),
+        '/signup': (context) => signup(),
+        '/admin_dashboard': (context) => AdminDashboard(),
+        '/teacher_dashboard': (context) => TeacherDashboard(),
+        '/login': (context) => login(),
+        '/scanpage': (context) => scanpage(),
+        '/attendancemarked': (context) => attendancemarked(),
+        '/studentdashboard': (context) => StudentDashboard(),
+        '/studentsignup': (context) => studentsignup(),
+        '/teachersignup': (context) => teachersignup(),
       },
     );
   }
