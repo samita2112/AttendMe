@@ -1,7 +1,8 @@
+// import 'dart:html';
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-class login extends StatelessWidget {
+class signup extends StatelessWidget {
   //report({required this.imagePath});
   bool _value = false;
   int val = -1;
