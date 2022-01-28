@@ -46,31 +46,31 @@ class signup extends StatelessWidget {
       //   // ),
 
       //    ),
-
-      body: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              ClipPath(
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 400,
-                  color: Colors.teal,
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                ClipPath(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 450,
+                    color: Colors.teal[100],
+                  ),
+                  clipper: CustomClipPath(),
                 ),
-                clipper: CustomClipPath(),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 40.0, right: 30.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[
-                    // SizedBox(
-                    //   height: 80.0,
-                    // ),
-                    ListTile(
-                      title: Text(
+                Container(
+                  padding: const EdgeInsets.only(left: 40.0, right: 30.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: const <Widget>[
+                      // SizedBox(
+                      //   height: 80.0,
+                      // ),
+                      Text(
                         'SignUp',
                         // textAlign: TextAlign.left,
                         style: TextStyle(
@@ -78,10 +78,9 @@ class signup extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                             fontFamily: 'Roboto'),
                       ),
-                    ),
-                    // SizedBox(height: 15.0),
-                    ListTile(
-                      title: Text(
+
+                      SizedBox(height: 10.0),
+                      Text(
                         "Select Category",
                         style: TextStyle(
                           fontSize: 28,
@@ -89,65 +88,59 @@ class signup extends StatelessWidget {
                           color: Colors.indigo,
                         ),
                       ),
-                    ),
-                    // SizedBox(height: 40.0),
-                    ListTile(
-                      title: Text(
-                        'Teacher',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w400,
+
+                      SizedBox(height: 20.0),
+                      ListTile(
+                        title: Text(
+                          'Teacher',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        // leading: Radio(
+                        //   value: 1,
+                        //   groupValue: val,
+                        //   onChanged: (value) {
+                        //     setState(() {
+                        //       val = value;
+                        //     });
+                        //   },
+                        // ),
+                      ),
+                      // SizedBox(height: 25.0),
+                      ListTile(
+                        title: Text(
+                          'Student',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
-                      // leading: Radio(
-                      //   value: 1,
-                      //   groupValue: val,
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       val = value;
-                      //     });
-                      //   },
-                      // ),
-                    ),
-                    // SizedBox(height: 25.0),
-                    ListTile(
-                      title: Text(
-                        'Student',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      // FlatButton(
+                      //   child: const Text("SignUp"),
+                      //   onPressed: () {},
+                      //   textColor: Colors.white,
+                      //   color: Colors.indigo,
+                      // )
+                    ],
+                  ),
                 ),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 100.0),
+              height: 350.0,
+              width: 350.0,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/girl.png'), fit: BoxFit.cover),
               ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  // SizedBox(
-                  //   height: 100.0,
-                  // ),
-                  // Image.asset('assets/girl.png'),
-                  Container(
-                    // width: MediaQuery.of(context).size.width,
-                    // height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        // fit: BoxFit.fill,
-                        image: AssetImage("assets/girl.png"),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

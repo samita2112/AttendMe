@@ -1,8 +1,10 @@
-import 'dart:io';
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
-class login extends StatelessWidget {
+class teachersignup extends StatelessWidget {
   //report({required this.imagePath});
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -15,17 +17,29 @@ class login extends StatelessWidget {
                 ClipPath(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 450,
-                    color: Colors.teal[100],
+                    height: 300,
+                    color: Colors.blue,
                   ),
                   clipper: CustomClipPath(),
                 ),
-                const SizedBox(height: 20.0),
+                const SizedBox(height: 10.0),
                 Form(
                   child: Container(
                     padding: const EdgeInsets.only(left: 40.0, right: 80),
                     child: Column(
                       children: [
+                        const TextField(
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.person,
+                              color: Colors.black87,
+                              size: 30,
+                            ),
+                            hintText: 'Name',
+                            hintStyle: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
                         const TextField(
                           decoration: InputDecoration(
                             icon: Icon(
@@ -37,6 +51,7 @@ class login extends StatelessWidget {
                             hintStyle: TextStyle(color: Colors.grey),
                           ),
                         ),
+                        const SizedBox(height: 20),
                         const TextField(
                           decoration: InputDecoration(
                             icon: Icon(
@@ -49,8 +64,20 @@ class login extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
+                        const TextField(
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.lock,
+                              color: Colors.black87,
+                              size: 30,
+                            ),
+                            hintText: 'Confirm Password',
+                            hintStyle: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                        const SizedBox(height: 30),
                         FlatButton(
-                          child: const Text("Login"),
+                          child: const Text("SIGN UP"),
                           onPressed: () {},
                           textColor: Colors.white,
                           color: Colors.indigo[900],
@@ -61,34 +88,47 @@ class login extends StatelessWidget {
                 ),
               ],
             ),
-            // const SizedBox(
-            //   height: 300.0,
-            // ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SizedBox(
+                      height: 100.0,
+                    ),
                     Container(
-                      // padding: EdgeInsets.only(top: 100.0),
-                      height: 350.0,
-                      width: 350.0,
+                      height: 100.0,
+                      width: 100.0,
                       decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/girl.png'),
-                            fit: BoxFit.cover),
-                      ),
+                          image: DecorationImage(
+                              image: AssetImage('assets/teacher-1.png'),
+                              fit: BoxFit.cover),
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.all(Radius.circular(50))),
+                    ),
+                    const SizedBox(width: 10.0),
+                    Container(
+                      margin: const EdgeInsets.only(top: 80),
+                      height: 140.0,
+                      width: 140.0,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/teacher-2.png'),
+                              fit: BoxFit.cover),
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.all(Radius.circular(50))),
                     ),
                   ],
                 ),
-                const SizedBox(height: 45.0),
+                const SizedBox(height: 20.0),
                 const Padding(
-                  padding: EdgeInsets.only(left: 30.0),
+                  padding: EdgeInsets.only(left: 20.0),
                   child: Text(
-                    'Login',
+                    'Teacher',
                     style: TextStyle(
-                      fontSize: 50,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 40,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
