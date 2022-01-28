@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:attendme/pages/login.dart';
+import 'package:attendme/pages/studentsignup.dart';
+import 'package:attendme/pages/teachersignup.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +16,9 @@ class App extends StatelessWidget {
         // ignore: prefer_const_constructors
         //'/': (context) => title(),
 
-        '/': (context) => login(),
+        // '/': (context) => login(),
+        '/studentsignup': (context) => studentsignup(),
+        '/teachersignup': (context) => teachersignup(),
       },
     );
   }
