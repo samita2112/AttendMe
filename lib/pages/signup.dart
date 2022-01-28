@@ -2,50 +2,20 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-class signup extends StatelessWidget {
+class signup extends StatefulWidget {
+  @override
+  State<signup> createState() => _signupState();
+}
+
+class _signupState extends State<signup> {
   //report({required this.imagePath});
-  bool _value = false;
-  int val = -1;
+  // bool _value = false;
+
+  int role = 2;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.teal[500],
-      //   title: const Text(
-      //     'plantd',
-      //     style: TextStyle(
-      //       fontSize: 30,
-      //       fontFamily: 'Salsa',
-      //     ),
-      //   ),
-      //   actions: [
-      //     PopupMenuButton(
-      //         icon: Icon(Icons.menu),
-      //         onSelected: (value) {
-      //           if (value == '/previous_reports') {
-      //             Navigator.pushReplacementNamed(context, '/previous_reports');
-      //           } else {
-      //             Navigator.pushReplacementNamed(context, '/login');
-      //           }
-      //         },
-      //         itemBuilder: (context) => [
-      //               PopupMenuItem(
-      //                   child: Text("Previous Report"),
-      //                   value: '/previous_reports'),
-      //               PopupMenuItem(
-      //                 child: Text("Logout"),
-      //                 value: '/login',
-      //               )
-      //             ]),
-      //   ],
-      //   // backgroundColor: Colors.red[500],
-      // ),
-
-      // body: const Center(
-      //   // child: Image(image: AssetImage('assets/img2.png'),
-      //   // ),
-
-      //    ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
@@ -61,20 +31,39 @@ class signup extends StatelessWidget {
                   ),
                   clipper: CustomClipPath(),
                 ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(
+                  height: 40.0,
+                ),
+                Container(
+                  // padding: EdgeInsets.only(top: 100.0),
+                  height: 350.0,
+                  width: 350,
+
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/girl.png'),
+                        fit: BoxFit.cover),
+                  ),
+                ),
                 Container(
                   padding: const EdgeInsets.only(left: 40.0, right: 30.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     // mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
-                      // SizedBox(
-                      //   height: 80.0,
-                      // ),
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20.0,
+                      ),
                       Text(
                         'SignUp',
-                        // textAlign: TextAlign.left,
+                        textAlign: TextAlign.left,
                         style: TextStyle(
-                            fontSize: 45,
+                            fontSize: 40,
                             fontWeight: FontWeight.w800,
                             fontFamily: 'Roboto'),
                       ),
@@ -83,8 +72,8 @@ class signup extends StatelessWidget {
                       Text(
                         "Select Category",
                         style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w400,
                           color: Colors.indigo,
                         ),
                       ),
@@ -98,15 +87,19 @@ class signup extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        // leading: Radio(
-                        //   value: 1,
-                        //   groupValue: val,
-                        //   onChanged: (value) {
-                        //     setState(() {
-                        //       val = value;
-                        //     });
-                        //   },
-                        // ),
+                        leading: Transform.scale(
+                          scale: 1.2,
+                          child: Radio(
+                            value: 1,
+                            groupValue: role,
+                            onChanged: (int? value) {
+                              setState(() {
+                                role = value!;
+                              });
+                            },
+                            activeColor: Colors.indigo[900],
+                          ),
+                        ),
                       ),
                       // SizedBox(height: 25.0),
                       ListTile(
@@ -117,27 +110,43 @@ class signup extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
+                        leading: Transform.scale(
+                          scale: 1.2,
+                          child: Radio(
+                            value: 2,
+                            groupValue: role,
+                            onChanged: (int? value) {
+                              setState(() {
+                                role = value!;
+                              });
+                            },
+                            activeColor: Colors.indigo[900],
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 20),
-                      // FlatButton(
-                      //   child: const Text("SignUp"),
-                      //   onPressed: () {},
-                      //   textColor: Colors.white,
-                      //   color: Colors.indigo,
-                      // )
+                      // const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            child: const Text(
+                              "SignUp",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.indigo[900]!),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
               ],
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 100.0),
-              height: 350.0,
-              width: 350.0,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/girl.png'), fit: BoxFit.cover),
-              ),
             ),
           ],
         ),

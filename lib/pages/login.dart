@@ -49,11 +49,18 @@ class login extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        FlatButton(
-                          child: const Text("Login"),
+                        TextButton(
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                           onPressed: () {},
-                          textColor: Colors.white,
-                          color: Colors.indigo[900],
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.indigo[900]!),
+                          ),
                         )
                       ],
                     ),
@@ -67,12 +74,13 @@ class login extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const SizedBox(height: 40),
                 Row(
                   children: [
                     Container(
                       // padding: EdgeInsets.only(top: 100.0),
                       height: 350.0,
-                      width: 350.0,
+
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage('assets/girl.png'),
@@ -81,13 +89,13 @@ class login extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 45.0),
+                const SizedBox(height: 20.0),
                 const Padding(
                   padding: EdgeInsets.only(left: 30.0),
                   child: Text(
                     'Login',
                     style: TextStyle(
-                      fontSize: 50,
+                      fontSize: 45,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
