@@ -1,3 +1,5 @@
+import 'package:attendme/pages/admin_dashboard.dart';
+import 'package:attendme/pages/teacher_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:attendme/pages/login.dart';
 
@@ -13,8 +15,9 @@ class App extends StatelessWidget {
       routes: {
         // ignore: prefer_const_constructors
         //'/': (context) => title(),
-
-        '/': (context) => login(),
+        '/admin_dashboard':(context)=> AdminDashboard(),
+        '/teacher_dashboard':(context)=> TeacherDashboard(),
+        '/login': (context) => login(),
       },
     );
   }
