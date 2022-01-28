@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:attendme/pages/login.dart';
+import 'package:attendme/pages/scanpage.dart';
+import 'package:attendme/pages/attendancemarked.dart';
+import 'package:attendme/pages/StudentDashboard.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +17,10 @@ class App extends StatelessWidget {
         // ignore: prefer_const_constructors
         //'/': (context) => title(),
 
-        '/': (context) => login(),
+        '/': (context) => scanpage(),
+        // '/scanpage': (context) => scanpage(),
+        // '/attendancemarked': (context) => attendancemarked(),
+        // '/studentdashboard': (context) => StudentDashboard(),
       },
     );
   }
