@@ -1,9 +1,31 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:attendme/services/auth.dart';
 import 'package:flutter/material.dart';
 
-class teachersignup extends StatelessWidget {
+class teachersignup extends StatefulWidget {
+  @override
+  State<teachersignup> createState() => _teachersignupState();
+}
+
+class _teachersignupState extends State<teachersignup> {
   //report({required this.imagePath});
+  final AuthService _auth = AuthService();
+
+  final _formkey = GlobalKey<FormState>();
+
+  String name = '';
+
+  String email = '';
+
+  String phone = '';
+
+  String password = '';
+
+  String confirmpassword = '';
+
+  String error = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +46,7 @@ class teachersignup extends StatelessWidget {
                 ),
                 const SizedBox(height: 10.0),
                 Form(
+                  key: _formkey,
                   child: Container(
                     padding: const EdgeInsets.only(left: 40.0, right: 80),
                     child: Column(
@@ -40,7 +63,12 @@ class teachersignup extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const TextField(
+                        TextFormField(
+                          validator: (val) =>
+                              val!.isEmpty ? 'Enter email' : null,
+                          onChanged: (val) {
+                            setState(() => email = val);
+                          },
                           decoration: InputDecoration(
                             icon: Icon(
                               Icons.mail,
@@ -52,7 +80,13 @@ class teachersignup extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const TextField(
+                        TextFormField(
+                          validator: (val) =>
+                              val!.isEmpty ? 'Enter password' : null,
+                          onChanged: (val) {
+                            setState(() => password = val);
+                          },
+                          obscureText: true,
                           decoration: InputDecoration(
                             icon: Icon(
                               Icons.lock,
@@ -64,7 +98,14 @@ class teachersignup extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const TextField(
+                        TextFormField(
+                          validator: (val) => (val != password)
+                              ? 'Passwords do not match'
+                              : null,
+                          onChanged: (val) {
+                            setState(() => confirmpassword = val);
+                          },
+                          obscureText: true,
                           decoration: InputDecoration(
                             icon: Icon(
                               Icons.lock,
@@ -78,9 +119,18 @@ class teachersignup extends StatelessWidget {
                         const SizedBox(height: 30),
                         FlatButton(
                           child: const Text("SIGN UP"),
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/teacher_dashboard');
+                          onPressed: () async {
+                            // Navigator.pushReplacementNamed(
+                            //     context, '/teacher_dashboard');
+                            if (_formkey.currentState!.validate()) {
+                              dynamic result =
+                                  await _auth.register(email, password);
+                              if (result == null) {
+                                setState(() =>
+                                    error = 'Please enter a valid Email Id');
+                              }
+                              // Navigator.pushReplacementNamed(context, '/');
+                            }
                           },
                           textColor: Colors.white,
                           color: Colors.indigo[900],

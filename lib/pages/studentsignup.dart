@@ -1,10 +1,31 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:attendme/services/auth.dart';
 
-class studentsignup extends StatelessWidget {
+class studentsignup extends StatefulWidget {
+  @override
+  State<studentsignup> createState() => _studentsignupState();
+}
+
+class _studentsignupState extends State<studentsignup> {
   //report({required this.imagePath});
   @override
+  final AuthService _auth = AuthService();
+
+  final _formkey = GlobalKey<FormState>();
+
+  String name = '';
+
+  String email = '';
+
+  String phone = '';
+
+  String password = '';
+
+  String confirmpassword = '';
+
+  String error = '';
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -24,6 +45,7 @@ class studentsignup extends StatelessWidget {
                 ),
                 const SizedBox(height: 10.0),
                 Form(
+                  key: _formkey,
                   child: Container(
                     padding: const EdgeInsets.only(left: 40.0, right: 80),
                     child: Column(
@@ -40,7 +62,12 @@ class studentsignup extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const TextField(
+                        TextFormField(
+                          validator: (val) =>
+                              val!.isEmpty ? 'Enter email' : null,
+                          onChanged: (val) {
+                            setState(() => email = val);
+                          },
                           decoration: InputDecoration(
                             icon: Icon(
                               Icons.mail,
@@ -76,7 +103,13 @@ class studentsignup extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const TextField(
+                        TextFormField(
+                          validator: (val) =>
+                              val!.isEmpty ? 'Enter password' : null,
+                          onChanged: (val) {
+                            setState(() => password = val);
+                          },
+                          obscureText: true,
                           decoration: InputDecoration(
                             icon: Icon(
                               Icons.lock,
@@ -88,7 +121,14 @@ class studentsignup extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const TextField(
+                        TextFormField(
+                          validator: (val) => (val != password)
+                              ? 'Passwords do not match'
+                              : null,
+                          onChanged: (val) {
+                            setState(() => confirmpassword = val);
+                          },
+                          obscureText: true,
                           decoration: InputDecoration(
                             icon: Icon(
                               Icons.lock,
@@ -102,9 +142,15 @@ class studentsignup extends StatelessWidget {
                         const SizedBox(height: 10),
                         FlatButton(
                           child: const Text("SIGN UP"),
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/studentdashboard');
+                          onPressed: () async {
+                            if (_formkey.currentState!.validate()) {
+                              dynamic result =
+                                  await _auth.register(email, password);
+                              if (result == null) {
+                                setState(() =>
+                                    error = 'Please enter a valid Email Id');
+                              }
+                            }
                           },
                           textColor: Colors.white,
                           color: Colors.indigo[900],
