@@ -1,5 +1,5 @@
 class MyUser {
-
   final String? uid;
-  MyUser({ this.uid });
+  // final String? type;
+  MyUser({this.uid});
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:attendme/pages/signup.dart';
 import 'package:attendme/pages/admin_dashboard.dart';
 import 'package:attendme/pages/teacher_dashboard.dart';
+import 'package:attendme/pages/profile.dart';
 import 'package:attendme/pages/title.dart';
 import 'package:flutter/material.dart';
 import 'package:attendme/pages/login.dart';
@@ -31,6 +32,7 @@ class App extends StatelessWidget {
         //'/': (context) => title(),
 
         '/': (context) => title(),
+        '/profile': (context) => profile(),
         '/signup': (context) => signup(),
         '/admin_dashboard': (context) => AdminDashboard(),
         '/teacher_dashboard': (context) => TeacherDashboard(),

@@ -1,9 +1,16 @@
 // import 'dart:html';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:attendme/services/auth.dart';
 
-class StudentDashboard extends StatelessWidget {
+class StudentDashboard extends StatefulWidget {
+  @override
+  State<StudentDashboard> createState() => _StudentDashboardState();
+}
+
+class _StudentDashboardState extends State<StudentDashboard> {
   //report({required this.imagePath});
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +29,10 @@ class StudentDashboard extends StatelessWidget {
         leading: PopupMenuButton(
             icon: Icon(Icons.menu),
             onSelected: (value) {
-              if (value == '/previous_reports') {
-                Navigator.pushReplacementNamed(context, '/previous_reports');
+              if (value == '/profile') {
+                Navigator.pushNamed(context, '/profile');
               } else {
+                _auth.signOut();
                 Navigator.pushReplacementNamed(context, '/login');
               }
             },
@@ -32,6 +40,10 @@ class StudentDashboard extends StatelessWidget {
                   PopupMenuItem(
                     child: Text("Logout"),
                     value: '/login',
+                  ),
+                  PopupMenuItem(
+                    child: Text("Profile"),
+                    value: '/profile',
                   )
                 ]),
         // backgroundColor: Colors.red[500],

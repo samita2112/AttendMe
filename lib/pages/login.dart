@@ -1,168 +1,217 @@
 import 'dart:io';
+import 'package:attendme/models/user.dart';
+import 'package:attendme/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class login extends StatelessWidget {
+class login extends StatefulWidget {
+  @override
+  State<login> createState() => _loginState();
+}
+
+class _loginState extends State<login> {
+  final AuthService _auth = AuthService();
+  final db = AuthService().db;
+  String email = '';
+  String password = '';
+
   //report({required this.imagePath});
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                ClipPath(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 450,
-                    color: Colors.cyan[100],
-                  ),
-                  clipper: CustomClipPath(),
-                ),
-                const SizedBox(height: 20.0),
-                Form(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const TextField(
-                          decoration: InputDecoration(
-                            icon: Icon(
-                              Icons.mail,
-                              color: Colors.black87,
-                              size: 30,
-                            ),
-                            hintText: 'Email',
-                            hintStyle: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                        const TextField(
-                          decoration: InputDecoration(
-                            icon: Icon(
-                              Icons.lock,
-                              color: Colors.black87,
-                              size: 30,
-                            ),
-                            hintText: 'Password',
-                            hintStyle: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        TextButton(
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(
-                                context, '/admin_dashboard');
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.indigo[900]!),
-                          ),
-                        )
-                      ],
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipPath(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 450,
+                      color: Colors.cyan[100],
                     ),
+                    clipper: CustomClipPath(),
                   ),
-                ),
-                SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: const Text(
-                        "Don't have an Account",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                            letterSpacing: 1.25),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        child: GestureDetector(
-                      child: RichText(
-                        text: TextSpan(
-                          text: '',
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'SIGNUP',
-                              style: TextStyle(
-                                  color: Colors.indigo[900],
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 14.0,
-                                  letterSpacing: 1.25),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/signup');
-                                },
+                  const SizedBox(height: 20.0),
+                  Form(
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TextFormField(
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter email' : null,
+                            onChanged: (val) {
+                              setState(() => email = val);
+                            },
+                            decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.mail,
+                                color: Colors.black87,
+                                size: 30,
+                              ),
+                              hintText: 'Email',
+                              hintStyle: TextStyle(color: Colors.grey),
                             ),
-                            TextSpan(
-                              text: '  Here',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14.0,
-                                  letterSpacing: 1.25),
+                          ),
+                          TextFormField(
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter password' : null,
+                            onChanged: (val) {
+                              setState(() => password = val);
+                            },
+                            decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.lock,
+                                color: Colors.black87,
+                                size: 30,
+                              ),
+                              hintText: 'Password',
+                              hintStyle: TextStyle(color: Colors.grey),
                             ),
-                          ],
-                        ),
-                      ),
-                    ))
-                  ],
-                ),
-              ],
-            ),
-            // const SizedBox(
-            //   height: 300.0,
-            // ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 40),
-                Row(
-                  children: [
-                    Container(
-                      // padding: EdgeInsets.only(top: 100.0),
-                      height: 350.0,
-                      width: 350,
+                          ),
+                          const SizedBox(height: 20),
+                          TextButton(
+                            child: const Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            onPressed: () async {
+                              MyUser user = await _auth.signin(email, password);
 
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/girl.png'),
-                            fit: BoxFit.cover),
+                              final uid = user.uid;
+                              var type;
+                              var collection = db.collection('users');
+
+                              var docSnapshot = await collection.doc(uid).get();
+                              if (docSnapshot.exists) {
+                                Map<String, dynamic> data = docSnapshot.data()!;
+
+                                // You can then retrieve the value from the Map like this:
+                                type = data['Type'];
+                              }
+
+                              if (type == 'teacher') {
+                                Navigator.pushReplacementNamed(
+                                    context, '/teacher_dashboard');
+                              }
+                              if (type == 'student') {
+                                Navigator.pushReplacementNamed(
+                                    context, '/studentdashboard');
+                              }
+                              if (type == 'admin') {
+                                Navigator.pushReplacementNamed(
+                                    context, '/admin_dashboard');
+                              }
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.indigo[900]!),
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-                const Padding(
-                  padding: EdgeInsets.only(left: 30.0),
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 45,
-                      fontWeight: FontWeight.w800,
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: const Text(
+                          "Don't have an Account",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.0,
+                              letterSpacing: 1.25),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          child: GestureDetector(
+                        child: RichText(
+                          text: TextSpan(
+                            text: '',
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'SIGNUP',
+                                style: TextStyle(
+                                    color: Colors.indigo[900],
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 14.0,
+                                    letterSpacing: 1.25),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigator.pushReplacementNamed(
+                                        context, '/signup');
+                                  },
+                              ),
+                              TextSpan(
+                                text: '  Here',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.0,
+                                    letterSpacing: 1.25),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ))
+                    ],
+                  ),
+                ],
+              ),
+              // const SizedBox(
+              //   height: 300.0,
+              // ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 40),
+                  Row(
+                    children: [
+                      Container(
+                        // padding: EdgeInsets.only(top: 100.0),
+                        height: 350.0,
+                        width: 350,
+
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/girl.png'),
+                              fit: BoxFit.cover),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20.0),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 30.0),
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 45,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
