@@ -138,11 +138,9 @@ class _signupState extends State<signup> {
                             ),
                             onPressed: () {
                               if (role == 2) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/studentsignup');
+                                Navigator.pushNamed(context, '/studentsignup');
                               } else {
-                                Navigator.pushReplacementNamed(
-                                    context, '/teachersignup');
+                                Navigator.pushNamed(context, '/teachersignup');
                               }
                             },
                             style: ButtonStyle(

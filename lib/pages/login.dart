@@ -155,8 +155,7 @@ class _loginState extends State<login> {
                                     letterSpacing: 1.25),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.pushReplacementNamed(
-                                        context, '/signup');
+                                    Navigator.pushNamed(context, '/signup');
                                   },
                               ),
                               TextSpan(

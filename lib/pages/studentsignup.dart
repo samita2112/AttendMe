@@ -24,13 +24,20 @@ class _studentsignupState extends State<studentsignup> {
   String rollno = '';
 
   String division = '';
-  String year = '';
+  String year = 'first';
   String branch = '';
   String password = '';
 
   String confirmpassword = '';
 
   String error = '';
+  List<DropdownMenuItem<String>> yearItems = [
+    DropdownMenuItem(child: Text("First"), value: "first"),
+    DropdownMenuItem(child: Text("Second"), value: "second"),
+    DropdownMenuItem(child: Text("Third"), value: "third"),
+    DropdownMenuItem(child: Text("Fourth"), value: "fourth"),
+  ];
+
   Widget build(BuildContext context) {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
@@ -90,22 +97,26 @@ class _studentsignupState extends State<studentsignup> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          TextFormField(
-                            validator: (val) =>
-                                val!.isEmpty ? 'Enter Year' : null,
-                            onChanged: (val) {
-                              setState(() => year = val);
-                            },
-                            decoration: InputDecoration(
-                              icon: Icon(
-                                Icons.groups,
-                                color: Colors.black87,
-                                size: 30,
-                              ),
-                              hintText: 'Year',
-                              hintStyle: TextStyle(color: Colors.grey),
-                            ),
-                          ),
+                          DropdownButton(
+                              onChanged: (value) => {},
+                              value: year,
+                              items: yearItems),
+                          // TextFormField(
+                          //   validator: (val) =>
+                          //       val!.isEmpty ? 'Enter Year' : null,
+                          //   onChanged: (val) {
+                          //     setState(() => year = val);
+                          //   },
+                          //   decoration: InputDecoration(
+                          //     icon: Icon(
+                          //       Icons.groups,
+                          //       color: Colors.black87,
+                          //       size: 30,
+                          //     ),
+                          //     hintText: 'Year',
+                          //     hintStyle: TextStyle(color: Colors.grey),
+                          //   ),
+                          // ),
                           const SizedBox(height: 20),
                           TextFormField(
                             validator: (val) =>
@@ -200,7 +211,13 @@ class _studentsignupState extends State<studentsignup> {
                             onPressed: () async {
                               if (_formkey.currentState!.validate()) {
                                 dynamic result = await _auth.registerStudent(
-                                    email, password, name, division, rollno);
+                                    email,
+                                    password,
+                                    name,
+                                    division,
+                                    rollno,
+                                    year,
+                                    branch);
                                 if (result == null) {
                                   setState(() =>
                                       error = 'Please enter a valid Email Id');

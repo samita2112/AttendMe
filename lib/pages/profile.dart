@@ -14,6 +14,7 @@ class _profileState extends State<profile> {
   final AuthService _auth = AuthService();
   final db = AuthService().db;
   final FirebaseAuth auth = FirebaseAuth.instance;
+  TextEditingController _controller = TextEditingController();
   String name = '',
       email = '',
       rollno = '',
@@ -40,6 +41,7 @@ class _profileState extends State<profile> {
         division = data['Division'];
         year = data['Year'];
         branch = data['Branch'];
+        _controller.text = name;
       });
     }
     print(year);
@@ -74,7 +76,7 @@ class _profileState extends State<profile> {
                 icon: Icon(Icons.menu),
                 onSelected: (value) {
                   if (value == '/profile') {
-                    Navigator.pushReplacementNamed(context, '/profile');
+                    Navigator.pushNamed(context, '/profile');
                   } else {
                     _auth.signOut();
                     Navigator.pushReplacementNamed(context, '/login');
@@ -131,7 +133,7 @@ class _profileState extends State<profile> {
                                 hintText: 'Name',
                                 hintStyle: TextStyle(color: Colors.grey),
                               ),
-                              initialValue: name,
+                              controller: _controller,
                               // key: Key(name),
                             ),
                             const SizedBox(height: 20),
