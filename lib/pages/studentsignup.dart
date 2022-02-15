@@ -23,9 +23,9 @@ class _studentsignupState extends State<studentsignup> {
 
   String rollno = '';
 
-  String division = '';
-  String year = 'first';
-  String branch = '';
+  String? division;
+  String? year = null;
+  String? branch = null;
   String password = '';
 
   String confirmpassword = '';
@@ -36,6 +36,21 @@ class _studentsignupState extends State<studentsignup> {
     DropdownMenuItem(child: Text("Second"), value: "second"),
     DropdownMenuItem(child: Text("Third"), value: "third"),
     DropdownMenuItem(child: Text("Fourth"), value: "fourth"),
+  ];
+
+  List<DropdownMenuItem<String>> branchItems = [
+    DropdownMenuItem(child: Text("CMPN"), value: "cmpn"),
+    DropdownMenuItem(child: Text("INFT"), value: "inft"),
+    DropdownMenuItem(child: Text("EXTC"), value: "extc"),
+    DropdownMenuItem(child: Text("ETRX"), value: "etrx"),
+    DropdownMenuItem(child: Text("INST"), value: "inst"),
+    DropdownMenuItem(child: Text("AIDS"), value: "aids"),
+  ];
+
+  List<DropdownMenuItem<String>> divItems = [
+    DropdownMenuItem(child: Text("A"), value: "a"),
+    DropdownMenuItem(child: Text("B"), value: "b"),
+    DropdownMenuItem(child: Text("C"), value: "c"),
   ];
 
   Widget build(BuildContext context) {
@@ -97,60 +112,63 @@ class _studentsignupState extends State<studentsignup> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          DropdownButton(
-                              onChanged: (value) => {},
+                          DropdownButtonFormField(
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  year = newValue!;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                icon: Icon(
+                                  Icons.calendar_today,
+                                  color: Colors.black87,
+                                  size: 30,
+                                ),
+                              ),
+                              // isExpanded: true,
+
+                              hint: Text('Year'),
                               value: year,
                               items: yearItems),
-                          // TextFormField(
-                          //   validator: (val) =>
-                          //       val!.isEmpty ? 'Enter Year' : null,
-                          //   onChanged: (val) {
-                          //     setState(() => year = val);
-                          //   },
-                          //   decoration: InputDecoration(
-                          //     icon: Icon(
-                          //       Icons.groups,
-                          //       color: Colors.black87,
-                          //       size: 30,
-                          //     ),
-                          //     hintText: 'Year',
-                          //     hintStyle: TextStyle(color: Colors.grey),
-                          //   ),
-                          // ),
                           const SizedBox(height: 20),
-                          TextFormField(
-                            validator: (val) =>
-                                val!.isEmpty ? 'Enter Branch' : null,
-                            onChanged: (val) {
-                              setState(() => branch = val);
-                            },
-                            decoration: InputDecoration(
-                              icon: Icon(
-                                Icons.groups,
-                                color: Colors.black87,
-                                size: 30,
+                          DropdownButtonFormField(
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  branch = newValue!;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                icon: Icon(
+                                  Icons.account_balance,
+                                  color: Colors.black87,
+                                  size: 30,
+                                ),
                               ),
-                              hintText: 'Branch',
-                              hintStyle: TextStyle(color: Colors.grey),
-                            ),
-                          ),
+                              // isExpanded: true,
+
+                              hint: Text('Branch'),
+                              value: branch,
+                              items: branchItems),
                           const SizedBox(height: 20),
-                          TextFormField(
-                            validator: (val) =>
-                                val!.isEmpty ? 'Enter division' : null,
-                            onChanged: (val) {
-                              setState(() => division = val);
-                            },
-                            decoration: InputDecoration(
-                              icon: Icon(
-                                Icons.groups,
-                                color: Colors.black87,
-                                size: 30,
+                          //
+                          DropdownButtonFormField(
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  division = newValue!;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                icon: Icon(
+                                  Icons.group,
+                                  color: Colors.black87,
+                                  size: 30,
+                                ),
                               ),
-                              hintText: 'Division',
-                              hintStyle: TextStyle(color: Colors.grey),
-                            ),
-                          ),
+                              // isExpanded: true,
+
+                              hint: Text('Division'),
+                              value: division,
+                              items: divItems),
                           const SizedBox(height: 20),
                           TextFormField(
                             validator: (val) =>
@@ -160,7 +178,7 @@ class _studentsignupState extends State<studentsignup> {
                             },
                             decoration: InputDecoration(
                               icon: Icon(
-                                Icons.card_giftcard,
+                                Icons.dvr,
                                 color: Colors.black87,
                                 size: 30,
                               ),
@@ -214,10 +232,10 @@ class _studentsignupState extends State<studentsignup> {
                                     email,
                                     password,
                                     name,
-                                    division,
+                                    division!,
                                     rollno,
-                                    year,
-                                    branch);
+                                    year!,
+                                    branch!);
                                 if (result == null) {
                                   setState(() =>
                                       error = 'Please enter a valid Email Id');
