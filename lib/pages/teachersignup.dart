@@ -21,11 +21,20 @@ class _teachersignupState extends State<teachersignup> {
   String phone = '';
 
   String password = '';
-  String branch = '';
+  String? branch = null;
 
   String confirmpassword = '';
 
   String error = '';
+
+  List<DropdownMenuItem<String>> branchItems = [
+    DropdownMenuItem(child: Text("CMPN"), value: "cmpn"),
+    DropdownMenuItem(child: Text("INFT"), value: "inft"),
+    DropdownMenuItem(child: Text("EXTC"), value: "extc"),
+    DropdownMenuItem(child: Text("ETRX"), value: "etrx"),
+    DropdownMenuItem(child: Text("INST"), value: "inst"),
+    DropdownMenuItem(child: Text("AIDS"), value: "aids"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -70,22 +79,24 @@ class _teachersignupState extends State<teachersignup> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          TextFormField(
-                            validator: (val) =>
-                                val!.isEmpty ? 'Enter branch' : null,
-                            onChanged: (val) {
-                              setState(() => branch = val);
-                            },
-                            decoration: InputDecoration(
-                              icon: Icon(
-                                Icons.mail,
-                                color: Colors.black87,
-                                size: 30,
+                          DropdownButtonFormField(
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  branch = newValue!;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                icon: Icon(
+                                  Icons.account_balance,
+                                  color: Colors.black87,
+                                  size: 30,
+                                ),
                               ),
-                              hintText: 'Branch',
-                              hintStyle: TextStyle(color: Colors.grey),
-                            ),
-                          ),
+                              // isExpanded: true,
+
+                              hint: Text('Branch'),
+                              value: branch,
+                              items: branchItems),
                           const SizedBox(height: 20),
                           TextFormField(
                             validator: (val) =>
@@ -167,7 +178,7 @@ class _teachersignupState extends State<teachersignup> {
                               //     context, '/teacher_dashboard');
                               if (_formkey.currentState!.validate()) {
                                 dynamic result = await _auth.registerTeacher(
-                                    email, password, name);
+                                    email, password, phone, branch!, name);
                                 if (result == null) {
                                   setState(() =>
                                       error = 'Please enter a valid Email Id');

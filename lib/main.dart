@@ -11,6 +11,7 @@ import 'package:attendme/pages/login.dart';
 import 'package:attendme/pages/scanpage.dart';
 import 'package:attendme/pages/attendancemarked.dart';
 import 'package:attendme/pages/StudentDashboard.dart';
+import 'package:attendme/pages/editprofile.dart';
 import 'package:attendme/pages/studentsignup.dart';
 import 'package:attendme/pages/teachersignup.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,6 +35,7 @@ class App extends StatelessWidget {
 
         '/': (context) => title(),
         '/profile': (context) => profile(),
+        '/editprofile': (context) => editprofile(),
         '/signup': (context) => signup(),
         '/admin_dashboard': (context) => AdminDashboard(),
         '/teacher_dashboard': (context) => TeacherDashboard(),

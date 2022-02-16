@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:attendme/services/auth.dart';
 
-class profile extends StatefulWidget {
+class editprofile extends StatefulWidget {
   @override
-  State<profile> createState() => _profileState();
+  State<editprofile> createState() => _editprofileState();
 }
 
-class _profileState extends State<profile> {
+class _editprofileState extends State<editprofile> {
   //report({required this.imagePath});
-  bool edit = false;
+  bool edit = true;
   final AuthService _auth = AuthService();
   final db = AuthService().db;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -21,8 +21,13 @@ class _profileState extends State<profile> {
   TextEditingController _division = TextEditingController();
   TextEditingController _rollno = TextEditingController();
   TextEditingController _phone = TextEditingController();
-
-  String type = "";
+  String name = '',
+      email = '',
+      rollno = '',
+      division = '',
+      year = '',
+      branch = '',
+      type = "";
   final _formkey = GlobalKey<FormState>();
 
   fetch_profile() async {
@@ -43,22 +48,17 @@ class _profileState extends State<profile> {
         _division.text = data['Division'];
         _year.text = data['Year'];
         _branch.text = data['Branch'];
-        _phone.text = data['Branch'];
+        _phone.text = data['Phone'];
         type = data['Type'];
         // _controller.text = name;
       });
     }
+    print(year);
   }
 
   @override
   void initState() {
     fetch_profile();
-    // _name.text = "$email";
-    // _email.text = "$email";
-    // _branch.text = "$branch";
-    // _year.text = "$year";
-    // _division.text = "$division";
-    // _rollno.text = "$rollno";
     super.initState();
   }
 
@@ -160,9 +160,8 @@ class _profileState extends State<profile> {
                                   size: 30,
                                 ),
                               ),
-
-                              // // key: Key(email),
                               controller: _email,
+                              // // key: Key(email),
                             ),
                             (type == 'teacher' || type == 'student')
                                 ? SizedBox(height: 20)
@@ -275,7 +274,7 @@ class _profileState extends State<profile> {
                             const SizedBox(height: 10),
                             TextButton(
                               child: const Text(
-                                'Edit',
+                                'Save',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 15.0,
@@ -290,9 +289,7 @@ class _profileState extends State<profile> {
                                     borderRadius: BorderRadius.circular(12.0),
                                   ))),
                               onPressed: () {
-                                setState(() {
-                                  Navigator.pushNamed(context, '/editprofile');
-                                });
+                                setState(() {});
                               },
                             )
                           ],

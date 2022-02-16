@@ -21,8 +21,15 @@ class AuthService {
   }
 
   //register
-  Future registerStudent(String email, String password, String name,
-      String division, String rollno, String year, String branch) async {
+  Future registerStudent(
+      String email,
+      String password,
+      String name,
+      String division,
+      String rollno,
+      String phone,
+      String year,
+      String branch) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -32,6 +39,7 @@ class AuthService {
         "Email": email,
         "Division": division,
         "Rollno": rollno,
+        "Phone": phone,
         "Year": year,
         "Branch": branch,
         "Type": 'student'
@@ -44,7 +52,8 @@ class AuthService {
     }
   }
 
-  Future registerTeacher(String email, String password, String name) async {
+  Future registerTeacher(String email, String password, String phone,
+      String branch, String name) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -52,7 +61,8 @@ class AuthService {
       final new_user = await db.collection('users').doc(user!.uid).set({
         "Name": name,
         "Email": email,
-        // "Password": password,
+        "Phone": phone,
+        "Branch": branch,
         "Type": 'teacher',
       });
 

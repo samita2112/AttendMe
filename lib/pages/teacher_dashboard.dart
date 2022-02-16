@@ -29,14 +29,18 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
         leading: PopupMenuButton(
             icon: Icon(Icons.menu),
             onSelected: (value) {
-              if (value == '/previous_reports') {
-                _auth.signOut();
-                Navigator.pushReplacementNamed(context, '/previous_reports');
+              if (value == '/profile') {
+                Navigator.pushReplacementNamed(context, '/profile');
               } else {
+                _auth.signOut();
                 Navigator.pushReplacementNamed(context, '/login');
               }
             },
             itemBuilder: (context) => [
+                  PopupMenuItem(
+                    child: Text("Profile"),
+                    value: '/profile',
+                  ),
                   PopupMenuItem(
                     child: Text("Logout"),
                     value: '/login',

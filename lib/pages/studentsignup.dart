@@ -32,25 +32,25 @@ class _studentsignupState extends State<studentsignup> {
 
   String error = '';
   List<DropdownMenuItem<String>> yearItems = [
-    DropdownMenuItem(child: Text("First"), value: "first"),
-    DropdownMenuItem(child: Text("Second"), value: "second"),
-    DropdownMenuItem(child: Text("Third"), value: "third"),
-    DropdownMenuItem(child: Text("Fourth"), value: "fourth"),
+    DropdownMenuItem(child: Text("First"), value: "First"),
+    DropdownMenuItem(child: Text("Second"), value: "Second"),
+    DropdownMenuItem(child: Text("Third"), value: "Third"),
+    DropdownMenuItem(child: Text("Fourth"), value: "Fourth"),
   ];
 
   List<DropdownMenuItem<String>> branchItems = [
-    DropdownMenuItem(child: Text("CMPN"), value: "cmpn"),
-    DropdownMenuItem(child: Text("INFT"), value: "inft"),
-    DropdownMenuItem(child: Text("EXTC"), value: "extc"),
-    DropdownMenuItem(child: Text("ETRX"), value: "etrx"),
-    DropdownMenuItem(child: Text("INST"), value: "inst"),
-    DropdownMenuItem(child: Text("AIDS"), value: "aids"),
+    DropdownMenuItem(child: Text("CMPN"), value: "CMPN"),
+    DropdownMenuItem(child: Text("INFT"), value: "INFT"),
+    DropdownMenuItem(child: Text("EXTC"), value: "EXTC"),
+    DropdownMenuItem(child: Text("ETRX"), value: "ETRX"),
+    DropdownMenuItem(child: Text("INST"), value: "INST"),
+    DropdownMenuItem(child: Text("AIDS"), value: "AIDS"),
   ];
 
   List<DropdownMenuItem<String>> divItems = [
-    DropdownMenuItem(child: Text("A"), value: "a"),
-    DropdownMenuItem(child: Text("B"), value: "b"),
-    DropdownMenuItem(child: Text("C"), value: "c"),
+    DropdownMenuItem(child: Text("A"), value: "A"),
+    DropdownMenuItem(child: Text("B"), value: "B"),
+    DropdownMenuItem(child: Text("C"), value: "C"),
   ];
 
   Widget build(BuildContext context) {
@@ -108,6 +108,23 @@ class _studentsignupState extends State<studentsignup> {
                                 size: 30,
                               ),
                               hintText: 'Email',
+                              hintStyle: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            validator: (val) =>
+                                val!.isEmpty ? 'Enter phone' : null,
+                            onChanged: (val) {
+                              setState(() => phone = val);
+                            },
+                            decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.mail,
+                                color: Colors.black87,
+                                size: 30,
+                              ),
+                              hintText: 'Phone no',
                               hintStyle: TextStyle(color: Colors.grey),
                             ),
                           ),
@@ -234,6 +251,7 @@ class _studentsignupState extends State<studentsignup> {
                                     name,
                                     division!,
                                     rollno,
+                                    phone,
                                     year!,
                                     branch!);
                                 if (result == null) {
