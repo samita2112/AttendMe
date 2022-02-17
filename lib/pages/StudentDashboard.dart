@@ -38,12 +38,12 @@ class _StudentDashboardState extends State<StudentDashboard> {
             },
             itemBuilder: (context) => [
                   PopupMenuItem(
-                    child: Text("Logout"),
-                    value: '/login',
-                  ),
-                  PopupMenuItem(
                     child: Text("Profile"),
                     value: '/profile',
+                  ),
+                  PopupMenuItem(
+                    child: Text("Logout"),
+                    value: '/login',
                   )
                 ]),
         // backgroundColor: Colors.red[500],

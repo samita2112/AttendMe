@@ -11,7 +11,6 @@ import 'package:attendme/pages/login.dart';
 import 'package:attendme/pages/scanpage.dart';
 import 'package:attendme/pages/attendancemarked.dart';
 import 'package:attendme/pages/StudentDashboard.dart';
-import 'package:attendme/pages/editprofile.dart';
 import 'package:attendme/pages/studentsignup.dart';
 import 'package:attendme/pages/teachersignup.dart';
 import 'package:firebase_core/firebase_core.dart';

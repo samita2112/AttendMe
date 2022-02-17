@@ -143,7 +143,9 @@ class _studentsignupState extends State<studentsignup> {
                                 ),
                               ),
                               // isExpanded: true,
-
+                              
+                              validator: (String? newValue) =>
+                                  newValue==null ? 'Enter Year' : null,
                               hint: Text('Year'),
                               value: year,
                               items: yearItems),
@@ -162,7 +164,8 @@ class _studentsignupState extends State<studentsignup> {
                                 ),
                               ),
                               // isExpanded: true,
-
+                              validator: (String? newValue) =>
+                                  newValue==null ? 'Enter Branch' : null,
                               hint: Text('Branch'),
                               value: branch,
                               items: branchItems),
@@ -174,6 +177,9 @@ class _studentsignupState extends State<studentsignup> {
                                   division = newValue!;
                                 });
                               },
+                              validator: (String? newValue) =>
+                                  newValue==null ? 'Enter Division' : null,
+                              
                               decoration: InputDecoration(
                                 icon: Icon(
                                   Icons.group,

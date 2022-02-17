@@ -15,7 +15,7 @@ class _loginState extends State<login> {
   final db = AuthService().db;
   String email = '';
   String password = '';
-
+  final _formkey = GlobalKey<FormState>();
   //report({required this.imagePath});
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +37,7 @@ class _loginState extends State<login> {
                   ),
                   const SizedBox(height: 20.0),
                   Form(
+                    key: _formkey,
                     child: Container(
                       padding: const EdgeInsets.only(left: 40.0, right: 40.0),
                       child: Column(
@@ -83,6 +84,7 @@ class _loginState extends State<login> {
                               ),
                             ),
                             onPressed: () async {
+                              if (_formkey.currentState!.validate()) {
                               MyUser user = await _auth.signin(email, password);
 
                               final uid = user.uid;
@@ -108,7 +110,7 @@ class _loginState extends State<login> {
                               if (type == 'admin') {
                                 Navigator.pushReplacementNamed(
                                     context, '/admin_dashboard');
-                              }
+                              }}
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
