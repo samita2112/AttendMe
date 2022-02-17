@@ -4,12 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:attendme/services/auth.dart';
 
 class editprofile extends StatefulWidget {
+  final String type;
+  const editprofile({required this.type}) : super();
+  // editprofile({
+  //   required this.type,
+  // });
   @override
-  State<editprofile> createState() => _editprofileState();
+  State<editprofile> createState() => _editprofileState(type: this.type);
 }
 
 class _editprofileState extends State<editprofile> {
+  String type;
+  _editprofileState({required this.type});
   //report({required this.imagePath});
+
   bool edit = true;
   final AuthService _auth = AuthService();
   final db = AuthService().db;
@@ -27,7 +35,9 @@ class _editprofileState extends State<editprofile> {
       division = '',
       year = '',
       branch = '',
-      type = "";
+      phone = '',
+      name1 = '';
+  // type = "";
   final _formkey = GlobalKey<FormState>();
 
   fetch_profile() async {
@@ -49,11 +59,18 @@ class _editprofileState extends State<editprofile> {
         _year.text = data['Year'];
         _branch.text = data['Branch'];
         _phone.text = data['Phone'];
-        type = data['Type'];
+        name1 = data['Name'];
+        email = data['Ymail'];
+        year = data['Year'];
+        branch = data['Branch'];
+        rollno = data['Rollno'];
+        division = data['Division'];
+        // type = data['Type'];
         // _controller.text = name;
       });
     }
-    print(year);
+    print(type);
+    print(_rollno.text);
   }
 
   @override
@@ -126,12 +143,12 @@ class _editprofileState extends State<editprofile> {
                         padding: const EdgeInsets.only(left: 40.0, right: 40),
                         child: Column(
                           children: [
-                            TextField(
-                              // validator: (val) =>
-                              //     val!.isEmpty ? 'Enter name' : null,
-                              // onChanged: (val) {
-                              //   setState(() => name = val);
-                              // },
+                            TextFormField(
+                              validator: (val) =>
+                                  val!.isEmpty ? 'Enter name' : null,
+                              onChanged: (val) {
+                                setState(() => name = val);
+                              },
                               decoration: InputDecoration(
                                 fillColor: Colors.black,
                                 enabled: edit,
@@ -147,11 +164,11 @@ class _editprofileState extends State<editprofile> {
                             ),
                             const SizedBox(height: 20),
                             TextFormField(
-                              // validator: (val) =>
-                              //     val!.isEmpty ? 'Enter email' : null,
-                              // onChanged: (val) {
-                              //   setState(() => email = val);
-                              // },
+                              validator: (val) =>
+                                  val!.isEmpty ? 'Enter email' : null,
+                              onChanged: (val) {
+                                setState(() => email = val);
+                              },
                               decoration: InputDecoration(
                                 enabled: edit,
                                 icon: Icon(
@@ -167,14 +184,14 @@ class _editprofileState extends State<editprofile> {
                                 ? SizedBox(height: 20)
                                 : Visibility(
                                     visible: false, child: const Text("")),
-                            Visibility(visible: false, child: Text("")),
+                            // Visibility(visible: false, child: Text("")),
                             (type == 'teacher' || type == 'student')
                                 ? TextFormField(
-                                    // validator: (val) =>
-                                    //     val!.isEmpty ? 'Enter Branch' : null,
-                                    // onChanged: (val) {
-                                    //   setState(() => branch = val);
-                                    // },
+                                    validator: (val) =>
+                                        val!.isEmpty ? 'Enter Branch' : null,
+                                    onChanged: (val) {
+                                      setState(() => branch = val);
+                                    },
                                     decoration: InputDecoration(
                                       enabled: edit,
                                       icon: Icon(
@@ -192,11 +209,11 @@ class _editprofileState extends State<editprofile> {
                                 : Visibility(visible: false, child: Text("")),
                             (type == 'student')
                                 ? TextFormField(
-                                    // validator: (val) =>
-                                    //     val!.isEmpty ? 'Enter Year' : null,
-                                    // onChanged: (val) {
-                                    //   setState(() => year = val);
-                                    // },
+                                    validator: (val) =>
+                                        val!.isEmpty ? 'Enter Year' : null,
+                                    onChanged: (val) {
+                                      setState(() => year = val);
+                                    },
                                     decoration: InputDecoration(
                                       enabled: edit,
                                       icon: Icon(
@@ -214,11 +231,11 @@ class _editprofileState extends State<editprofile> {
                                 : Visibility(visible: false, child: Text("")),
                             (type == 'student')
                                 ? TextFormField(
-                                    // validator: (val) =>
-                                    //     val!.isEmpty ? 'Enter division' : null,
-                                    // onChanged: (val) {
-                                    //   setState(() => division = val);
-                                    // },
+                                    validator: (val) =>
+                                        val!.isEmpty ? 'Enter division' : null,
+                                    onChanged: (val) {
+                                      setState(() => division = val);
+                                    },
                                     decoration: InputDecoration(
                                       enabled: edit,
                                       icon: Icon(
@@ -236,11 +253,11 @@ class _editprofileState extends State<editprofile> {
                                 : Visibility(visible: false, child: Text("")),
                             (type == 'student')
                                 ? TextFormField(
-                                    // validator: (val) =>
-                                    //     val!.isEmpty ? 'Enter roll no.' : null,
-                                    // onChanged: (val) {
-                                    //   setState(() => rollno = val);
-                                    // },
+                                    validator: (val) =>
+                                        val!.isEmpty ? 'Enter roll no.' : null,
+                                    onChanged: (val) {
+                                      setState(() => rollno = val);
+                                    },
                                     style: TextStyle(color: Colors.black),
                                     decoration: InputDecoration(
                                       enabled: edit,
@@ -254,11 +271,11 @@ class _editprofileState extends State<editprofile> {
                                   )
                                 : Visibility(visible: false, child: Text("")),
                             TextFormField(
-                              // validator: (val) =>
-                              //     val!.isEmpty ? 'Enter roll no.' : null,
-                              // onChanged: (val) {
-                              //   setState(() => rollno = val);
-                              // },
+                              validator: (val) =>
+                                  val!.isEmpty ? 'Enter roll no.' : null,
+                              onChanged: (val) {
+                                setState(() => rollno = val);
+                              },
                               style: TextStyle(color: Colors.black),
                               decoration: InputDecoration(
                                 enabled: edit,
@@ -273,25 +290,62 @@ class _editprofileState extends State<editprofile> {
                             const SizedBox(height: 20),
                             const SizedBox(height: 10),
                             TextButton(
-                              child: const Text(
-                                'Save',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    letterSpacing: 1.25),
-                              ),
-                              style: ButtonStyle(
-                                  backgroundColor: (MaterialStateProperty.all(
-                                      Colors.indigo[900])),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ))),
-                              onPressed: () {
-                                setState(() {});
-                              },
-                            )
+                                child: const Text(
+                                  'Save',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.0,
+                                      letterSpacing: 1.25),
+                                ),
+                                style: ButtonStyle(
+                                    backgroundColor: (MaterialStateProperty.all(
+                                        Colors.indigo[900])),
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ))),
+                                onPressed: () async {
+                                  final User? user = auth.currentUser;
+                                  final uid = user!.uid;
+                                  var collection = db.collection('users');
+                                  // String name1 = _name.toString();
+                                  //var querySnapshot = await collection.get();
+                                  if (_name != name) {
+                                    var docSnapshot = await collection
+                                        .doc(uid)
+                                        .update({'Name': name});
+                                  }
+                                  // else{
+                                  //   var docSnapshot = await collection
+                                  //       .doc(uid)
+                                  //       .update({'Name': _name});
+                                  // }
+                                  if (_rollno != rollno) {
+                                    var docSnapshot = await collection
+                                        .doc(uid)
+                                        .update({'Rollno': rollno});
+                                  }
+                                  // else{
+                                  //   var docSnapshot = await collection
+                                  //       .doc(uid)
+                                  //       .update({'Name': _name});
+                                  // }
+
+                                  // var docSnapshot = await collection
+                                  //     .doc(uid)
+                                  //     .update(
+
+                                  //     );
+                                  // {
+                                  // Map<String, dynamic> data =
+                                  //     docSnapshot.data()!;
+
+                                  // You can then retrieve the value from the Map like this:
+                                  // type = data['Type'];
+                                  Navigator.pushReplacementNamed(
+                                      context, '/profile');
+                                })
                           ],
                         ),
                       ),

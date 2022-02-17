@@ -35,7 +35,9 @@ class App extends StatelessWidget {
 
         '/': (context) => title(),
         '/profile': (context) => profile(),
-        '/editprofile': (context) => editprofile(),
+        // '/editprofile': (context) => editprofile(
+        //       type: Type,
+        //     ),
         '/signup': (context) => signup(),
         '/admin_dashboard': (context) => AdminDashboard(),
         '/teacher_dashboard': (context) => TeacherDashboard(),

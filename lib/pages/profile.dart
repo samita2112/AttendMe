@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:attendme/pages/editprofile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:attendme/services/auth.dart';
@@ -48,6 +49,7 @@ class _profileState extends State<profile> {
         // _controller.text = name;
       });
     }
+    print(type);
   }
 
   @override
@@ -291,7 +293,15 @@ class _profileState extends State<profile> {
                                   ))),
                               onPressed: () {
                                 setState(() {
-                                  Navigator.pushNamed(context, '/editprofile');
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => editprofile(
+                                          // Pass the automatically generated path to
+                                          // the DisplayPictureScreen widget.
+                                          type: type),
+                                    ),
+                                  );
+                                  // Navigator.pushNamed(context, '/editprofile');
                                 });
                               },
                             )
