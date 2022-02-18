@@ -2,17 +2,26 @@ import 'package:attendme/pages/attendeelist.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:attendme/services/auth.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class ViewAttendance extends StatefulWidget {
   @override
-  State<ViewAttendance> createState() => _ViewAttendanceState();
+  bool takeattendance;
+
+  ViewAttendance({this.takeattendance = false});
+  State<ViewAttendance> createState() =>
+      _ViewAttendanceState(takeattendance: takeattendance);
 }
 
 class _ViewAttendanceState extends State<ViewAttendance> {
   DateTime selectedDate = DateTime.now();
   final AuthService _auth = AuthService();
+  bool writetag = false;
   final db = AuthService().db;
   final FirebaseAuth auth = FirebaseAuth.instance;
+  late bool takeattendance;
+  String popuptext = "";
+  _ViewAttendanceState({this.takeattendance = false});
 
   TextEditingController _division = TextEditingController();
   TextEditingController _subject = TextEditingController();
@@ -179,37 +188,108 @@ class _ViewAttendanceState extends State<ViewAttendance> {
                                       Text(_date.text)
                                     ],
                                   ),
-                                  TextButton(
-                                    child: const Text(
-                                      'View Attendee List',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.0,
-                                          letterSpacing: 1.25),
-                                    ),
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            (MaterialStateProperty.all(
-                                                Colors.indigo[900])),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ))),
-                                    onPressed: () async {
-                                      await Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => AttendeeList(
-                                              // Pass the automatically generated path to
-                                              // the DisplayPictureScreen widget.
-                                              division: _division.text,
-                                              subject: _subject.text,
-                                              date: "17-02-22"),
+                                  (takeattendance)
+                                      ? TextButton(
+                                          child: const Text(
+                                            'Start Attendance',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15.0,
+                                                letterSpacing: 1.25),
+                                          ),
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  (MaterialStateProperty.all(
+                                                      Colors.indigo[900])),
+                                              shape: MaterialStateProperty.all<
+                                                      RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ))),
+                                          onPressed: () async {
+                                            var result;
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  _buildPopupDialog(context),
+                                            );
+                                            setState(() {
+                                              popuptext =
+                                                  "Scan to start attendance";
+                                            });
+                                            bool isAvailable = await NfcManager
+                                                .instance
+                                                .isAvailable();
+                                            // Start Session
+
+                                            if (isAvailable) {
+                                              NfcManager.instance.startSession(
+                                                  onDiscovered:
+                                                      (NfcTag tag) async {
+                                                var ndef = Ndef.from(tag);
+
+                                                NdefMessage message =
+                                                    NdefMessage([
+                                                  NdefRecord.createText(
+                                                      '{"Division":"${_division.text}","Subject":"${_subject.text}","Date":"${_date.text}"}'),
+                                                ]);
+
+                                                // try {
+                                                await ndef!.write(message);
+                                                result =
+                                                    'Success to "Ndef Write"';
+                                                print(result);
+                                                NfcManager.instance
+                                                    .stopSession();
+                                                setState(() {
+                                                  writetag = true;
+                                                });
+                                                if (writetag == true) {
+                                                  Navigator.pushNamed(context,
+                                                      '/stopattendance');
+                                                }
+                                                // } catch (e) {
+                                                //   result = e;
+                                                //   NfcManager.instance.stopSession(
+                                                //       errorMessage:
+                                                //           result.toString());
+                                                // }
+                                              });
+                                            }
+                                          },
+                                        )
+                                      : TextButton(
+                                          child: const Text(
+                                            'View Attendee List',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15.0,
+                                                letterSpacing: 1.25),
+                                          ),
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  (MaterialStateProperty.all(
+                                                      Colors.indigo[900])),
+                                              shape: MaterialStateProperty.all<
+                                                      RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ))),
+                                          onPressed: () async {
+                                            await Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) => AttendeeList(
+                                                    // Pass the automatically generated path to
+                                                    // the DisplayPictureScreen widget.
+                                                    division: _division.text,
+                                                    subject: _subject.text,
+                                                    date: _date.text),
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      );
-                                    },
-                                  )
                                 ],
                               ),
                             ),
@@ -222,6 +302,28 @@ class _ViewAttendanceState extends State<ViewAttendance> {
               ),
             ),
           )),
+    );
+  }
+
+  Widget _buildPopupDialog(BuildContext context) {
+    return new AlertDialog(
+      title: Text('$popuptext'),
+      content: new Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text("Tap your device on the tag to scan"),
+        ],
+      ),
+      // actions: <Widget>[
+      //   new FlatButton(
+      //     onPressed: () {
+      //       Navigator.of(context).pop();
+      //     },
+      //     textColor: Theme.of(context).primaryColor,
+      //     child: const Text('OK'),
+      //   ),
+      // ],
     );
   }
 

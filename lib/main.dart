@@ -14,6 +14,7 @@ import 'package:attendme/pages/scanpage.dart';
 import 'package:attendme/pages/attendancemarked.dart';
 import 'package:attendme/pages/StudentDashboard.dart';
 import 'package:attendme/pages/studentsignup.dart';
+import 'package:attendme/pages/stopattendance.dart';
 import 'package:attendme/pages/teachersignup.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -49,6 +50,7 @@ class App extends StatelessWidget {
         '/studentsignup': (context) => studentsignup(),
         '/teachersignup': (context) => teachersignup(),
         '/viewattendance': (context) => ViewAttendance(),
+        '/stopattendance': (context) => stopAttendance(),
       },
     );
   }

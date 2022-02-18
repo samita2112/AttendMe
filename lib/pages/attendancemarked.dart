@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class attendancemarked extends StatelessWidget {
-  //report({required this.imagePath});
+  final attendance;
+  attendancemarked({this.attendance = false});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,22 +26,36 @@ class attendancemarked extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  "Your attendance for this session is marked.",
-                  style: TextStyle(
-                    color: Colors.black,
-                    letterSpacing: 0.15,
-                    fontSize: 23.0,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                (attendance)
+                    ? Text(
+                        "Your attendance for this session is marked.",
+                        style: TextStyle(
+                          color: Colors.black,
+                          letterSpacing: 0.15,
+                          fontSize: 23.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      )
+                    : Text(
+                        "Your attendance could not be marked.",
+                        style: TextStyle(
+                          color: Colors.black,
+                          letterSpacing: 0.15,
+                          fontSize: 23.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                 Container(
-                  margin: EdgeInsets.only(top: 100.0),
-                  child: Image.asset(
-                    'assets/tick.png',
-                    height: 150.0,
-                  ),
-                )
+                    margin: EdgeInsets.only(top: 100.0),
+                    child: (attendance)
+                        ? Image.asset(
+                            'assets/tick.png',
+                            height: 150.0,
+                          )
+                        : Image.asset(
+                            'assets/cross.png',
+                            height: 150.0,
+                          ))
               ],
             ),
           ),

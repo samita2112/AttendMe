@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:attendme/pages/attendancemarked.dart';
 import 'package:attendme/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class scanpage extends StatefulWidget {
 
 class _scanpageState extends State<scanpage> {
   Nfc inst = Nfc();
-  bool attendancemarked = false;
+  bool attendancemarked1 = false;
   final AuthService _auth = AuthService();
   final db = AuthService().db;
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -71,8 +72,14 @@ class _scanpageState extends State<scanpage> {
 
                               decodedPayload = utf8.decode(record.payload);
                               jsonString = decodedPayload!.substring(3);
-                              result1 = jsonDecode(jsonString);
-                              print(result1["Subject"]);
+                              try {
+                                result1 = jsonDecode(jsonString);
+                                print(result1["Subject"]);
+                              } catch (e) {
+                                print(e);
+                                Navigator.pushNamed(
+                                    context, '/attendancemarked');
+                              }
                             });
                             NfcManager.instance.stopSession();
                             final User? user = auth.currentUser;
@@ -84,28 +91,41 @@ class _scanpageState extends State<scanpage> {
                             Map<String, dynamic> data = docSnapshot.data()!;
 
                             print(uid);
-                            if (result1 != null) {
-                              final storeresult = await db
-                                  .collection('divisions')
-                                  .doc(result1["Division"])
-                                  .collection("subjects")
-                                  .doc(result1["Subject"])
-                                  .collection(result1['Date'])
-                                  .doc(uid)
-                                  .set({
-                                "uid": uid,
-                                "Rollno": data['Rollno'],
-                                "Name": data['Name']
-                              });
-                              setState(() {
-                                attendancemarked = true;
-                              });
-                              if (attendancemarked = true) {
-                                Navigator.pushNamed(
-                                    context, '/attendancemarked');
+                            try {
+                              if (result1 != null) {
+                                final storeresult = await db
+                                    .collection('divisions')
+                                    .doc(result1["Division"])
+                                    .collection("subjects")
+                                    .doc(result1["Subject"])
+                                    .collection(result1['Date'])
+                                    .doc(uid)
+                                    .set({
+                                  "uid": uid,
+                                  "Rollno": data['Rollno'],
+                                  "Name": data['Name']
+                                });
+                                setState(() {
+                                  attendancemarked1 = true;
+                                });
                               }
+                            } catch (e) {
+                              print(e);
+                            }
+                            if (attendancemarked1 == true) {
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      attendancemarked(attendance: true),
+                                ),
+                              );
+                            } else {
+                              Navigator.pushNamed(context, '/attendancemarked');
                             }
                           });
+                          // if (attendancemarked1 == false) {
+                          //   Navigator.pushNamed(context, '/attendancemarked');
+                          // }
                         }
                       },
                       child: const Text(

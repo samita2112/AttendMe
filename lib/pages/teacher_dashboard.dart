@@ -1,7 +1,9 @@
 // import 'dart:html';
 import 'dart:io';
+import 'package:attendme/pages/viewattendance.dart';
 import 'package:flutter/material.dart';
 import 'package:attendme/services/auth.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class TeacherDashboard extends StatefulWidget {
   @override
@@ -68,7 +70,14 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
             Container(
               margin: EdgeInsets.only(top: 50.0),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ViewAttendance(
+                            // Pass the automatically generated path to
+                            // the DisplayPictureScreen widget.
+                            takeattendance: true,
+                          )));
+                },
                 child: Text(
                   'Take Attendance',
                   style: TextStyle(
