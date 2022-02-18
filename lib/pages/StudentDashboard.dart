@@ -69,7 +69,7 @@ class _StudentDashboardState extends State<StudentDashboard> {
               margin: EdgeInsets.only(top: 70.0),
               child: TextButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/scanpage');
+                  Navigator.pushNamed(context, '/scanpage');
                 },
                 child: Text(
                   'GIVE ATTENDANCE',
