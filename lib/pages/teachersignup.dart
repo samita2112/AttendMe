@@ -118,8 +118,17 @@ class _teachersignupState extends State<teachersignup> {
                             height: 20.0,
                           ),
                           TextFormField(
-                            validator: (val) =>
-                                val!.isEmpty ? 'Enter email' : null,
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return ("Email is Required.");
+                              } else {
+                                if (val.trim().contains("@ves.ac.in")) {
+                                  return null;
+                                } else {
+                                  return "Enter VES id";
+                                }
+                              }
+                            },
                             onChanged: (val) {
                               setState(() => email = val);
                             },
@@ -182,8 +191,9 @@ class _teachersignupState extends State<teachersignup> {
                                 if (result == null) {
                                   setState(() =>
                                       error = 'Please enter a valid Email Id');
-                                }
-                                // Navigator.pushReplacementNamed(context, '/');
+                                } else
+                                  Navigator.pushReplacementNamed(
+                                      context, '/login');
                               }
                             },
                             textColor: Colors.white,

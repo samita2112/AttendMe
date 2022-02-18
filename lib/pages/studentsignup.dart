@@ -96,8 +96,17 @@ class _studentsignupState extends State<studentsignup> {
                           ),
                           const SizedBox(height: 20),
                           TextFormField(
-                            validator: (val) =>
-                                val!.isEmpty ? 'Enter email' : null,
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return ("Email is Required.");
+                              } else {
+                                if (val.trim().contains("@ves.ac.in")) {
+                                  return null;
+                                } else {
+                                  return "Enter VES id";
+                                }
+                              }
+                            },
                             onChanged: (val) {
                               setState(() => email = val);
                             },
@@ -120,7 +129,7 @@ class _studentsignupState extends State<studentsignup> {
                             },
                             decoration: InputDecoration(
                               icon: Icon(
-                                Icons.mail,
+                                Icons.call,
                                 color: Colors.black87,
                                 size: 30,
                               ),

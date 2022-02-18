@@ -13,14 +13,14 @@ class AttendeeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          extendBodyBehindAppBar: true,
           appBar: AppBar(
-            elevation: 0,
+            elevation: 0.6,
             iconTheme: IconThemeData(
-              color: Colors.black,
+              color: Colors.blue[900],
             ),
-            titleTextStyle: TextStyle(color: Colors.black),
-            backgroundColor: Colors.transparent,
+            titleTextStyle: TextStyle(color: Colors.blue[900]),
+            backgroundColor: Colors.white,
+            // backgroundColor: Colors.transparent,
             title: const Text(
               'AttendMe',
               style: TextStyle(
@@ -44,41 +44,42 @@ class AttendeeList extends StatelessWidget {
                     ]),
             // backgroundColor: Colors.red[500],
           ),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.green[50],
           body: Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 1,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/title.png"),
-                      fit: BoxFit.cover)),
-              child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0, left: 25, right: 25),
+              child: SingleChildScrollView(
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  decoration: BoxDecoration(
-                    // image:DecorationImage(
-                    // image: FileImage(File(imagePath)),
-                    // fit: BoxFit.cover),
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.90,
-                      height: MediaQuery.of(context).size.height * 0.80,
-                      padding: EdgeInsets.all(35),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Subject: $subject"),
-                          Text("Division: $division"),
-                          Text("Date: $date"),
-                          FetchAttendeeList(
-                              division: division, subject: subject, date: date),
-                        ],
-                      ),
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height * 1,
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Subject: $subject",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16.5),
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          "Division: $division",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16.5),
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        Text(
+                          "Date: $date",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16.5),
+                        ),
+                        FetchAttendeeList(
+                            division: division, subject: subject, date: date),
+                      ],
                     ),
                   ),
                 ),
@@ -108,44 +109,54 @@ class FetchAttendeeList extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text("Absent");
           return Padding(
-            padding: const EdgeInsets.only(top:15.0),
-            child: Table(children:[
-              TableRow(
-                children:[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Rollno"),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("Name"),
-                  )
-                  ]
-                  ),
-            ...getAttendanceList(snapshot)],
-            border: TableBorder.all(  
-                          color: Colors.black26,  
-                          style: BorderStyle.solid,  
-                          width: 1),  ),
+            padding: const EdgeInsets.only(top: 15.0),
+            child: DataTable(
+              decoration: BoxDecoration(
+                  color: Colors.cyan[600],
+                  borderRadius: BorderRadius.circular(10)),
+              dataRowHeight: 38,
+              sortColumnIndex: 0,
+              sortAscending: true,
+              columns: [
+                DataColumn(
+                    // onSort: (columnIndex, ascending) => ,
+                    numeric: true,
+                    label: Text('RollNo',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ))),
+                DataColumn(
+                    label: Text('Name',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold))),
+                //  DataColumn(label: Text(
+                //     'Status',all
+                //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+                // )),
+              ],
+              rows: [...getAttendanceList(snapshot)],
+              // border: TableBorder.all(
+              //     color: Colors.black26, style: BorderStyle.solid, width: 1, ),
+            ),
           );
         });
   }
 
   getAttendanceList(AsyncSnapshot<QuerySnapshot> snapshot) {
     return snapshot.data?.docs.map((doc) {
-      return TableRow(
-        children:[
-           Padding(
-             padding: const EdgeInsets.all(8.0),
-             child: Text(doc["Rollno"],),
-           ),
-           Padding(
-             padding: const EdgeInsets.all(8.0),
-             child: Text(doc["Name"],
-             ),
-           )
-           ]
-           );
+      return DataRow(color: MaterialStateProperty.all(Colors.cyan[50]), cells: [
+        DataCell(
+          Text(
+            doc["Rollno"],
+          ),
+        ),
+        DataCell(
+          Text(
+            doc["Name"],
+          ),
+        ),
+      ]);
     }).toList();
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:attendme/pages/attendeelist.dart';
 import 'package:attendme/pages/login.dart';
+import 'package:attendme/pages/forgotPasswordPage.dart';
 import 'package:attendme/pages/viewattendance.dart';
 import 'package:flutter/material.dart';
 import 'package:attendme/pages/signup.dart';
@@ -42,6 +43,7 @@ class App extends StatelessWidget {
         //     ),
         '/signup': (context) => signup(),
         '/admin_dashboard': (context) => AdminDashboard(),
+        '/forgotPasswordPage': (context) => forgotPasswordPage(),
         '/teacher_dashboard': (context) => TeacherDashboard(),
         '/login': (context) => login(),
         '/scanpage': (context) => scanpage(),

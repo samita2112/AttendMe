@@ -44,11 +44,23 @@ class _loginState extends State<login> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           TextFormField(
-                            validator: (val) =>
-                                val!.isEmpty ? 'Enter email' : null,
+                            // validator: (val) =>
+                            //     val!.isEmpty ? 'Enter email' : null,
                             onChanged: (val) {
                               setState(() => email = val);
                             },
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return ("Email is Required.");
+                              } else {
+                                if (val.trim().contains("@ves.ac.in")) {
+                                  return null;
+                                } else {
+                                  return "Enter VES id";
+                                }
+                              }
+                            },
+
                             decoration: InputDecoration(
                               icon: Icon(
                                 Icons.mail,
@@ -65,6 +77,7 @@ class _loginState extends State<login> {
                             onChanged: (val) {
                               setState(() => password = val);
                             },
+                            obscureText: true,
                             decoration: InputDecoration(
                               icon: Icon(
                                 Icons.lock,
@@ -75,7 +88,32 @@ class _loginState extends State<login> {
                               hintStyle: TextStyle(color: Colors.grey),
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 7),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              RichText(
+                                  text: TextSpan(text: '', children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Forgot Password?',
+                                  style: TextStyle(
+                                      color: Colors.indigo[900],
+                                      fontWeight: FontWeight.w500,
+                                      decoration: TextDecoration.underline,
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.5),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.pushNamed(
+                                          context, '/forgotPasswordPage');
+                                    },
+                                ),
+                              ])),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           TextButton(
                             child: const Text(
                               "Login",
@@ -85,32 +123,36 @@ class _loginState extends State<login> {
                             ),
                             onPressed: () async {
                               if (_formkey.currentState!.validate()) {
-                              MyUser user = await _auth.signin(email, password);
+                                MyUser user =
+                                    await _auth.signin(email, password);
 
-                              final uid = user.uid;
-                              var type;
-                              var collection = db.collection('users');
+                                final uid = user.uid;
+                                var type;
+                                var collection = db.collection('users');
 
-                              var docSnapshot = await collection.doc(uid).get();
-                              if (docSnapshot.exists) {
-                                Map<String, dynamic> data = docSnapshot.data()!;
+                                var docSnapshot =
+                                    await collection.doc(uid).get();
+                                if (docSnapshot.exists) {
+                                  Map<String, dynamic> data =
+                                      docSnapshot.data()!;
 
-                                // You can then retrieve the value from the Map like this:
-                                type = data['Type'];
+                                  // You can then retrieve the value from the Map like this:
+                                  type = data['Type'];
+                                }
+
+                                if (type == 'teacher') {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/teacher_dashboard');
+                                }
+                                if (type == 'student') {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/studentdashboard');
+                                }
+                                if (type == 'admin') {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/admin_dashboard');
+                                }
                               }
-
-                              if (type == 'teacher') {
-                                Navigator.pushReplacementNamed(
-                                    context, '/teacher_dashboard');
-                              }
-                              if (type == 'student') {
-                                Navigator.pushReplacementNamed(
-                                    context, '/studentdashboard');
-                              }
-                              if (type == 'admin') {
-                                Navigator.pushReplacementNamed(
-                                    context, '/admin_dashboard');
-                              }}
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
@@ -121,7 +163,7 @@ class _loginState extends State<login> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 15.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
