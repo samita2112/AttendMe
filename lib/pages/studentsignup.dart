@@ -300,7 +300,7 @@ class _studentsignupState extends State<studentsignup> {
                         width: 100.0,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage('assets/student-1.png'),
+                                image: AssetImage('assets/girll.png'),
                                 fit: BoxFit.cover),
                             color: Colors.transparent,
                             borderRadius:
@@ -313,7 +313,7 @@ class _studentsignupState extends State<studentsignup> {
                         width: 100.0,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage('assets/student-2.png'),
+                                image: AssetImage('assets/boy.png'),
                                 fit: BoxFit.cover),
                             color: Colors.transparent,
                             borderRadius:
