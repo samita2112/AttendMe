@@ -205,11 +205,11 @@ class _teachersignupState extends State<teachersignup> {
                         height: 100.0,
                       ),
                       Container(
-                        height: 100.0,
-                        width: 100.0,
+                        height: 120.0,
+                        width: 120.0,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage('assets/teacher-1.png'),
+                                image: AssetImage('assets/teacher1.png'),
                                 fit: BoxFit.cover),
                             color: Colors.transparent,
                             borderRadius:
@@ -218,11 +218,11 @@ class _teachersignupState extends State<teachersignup> {
                       const SizedBox(width: 10.0),
                       Container(
                         margin: const EdgeInsets.only(top: 80),
-                        height: 140.0,
-                        width: 140.0,
+                        height: 120.0,
+                        width: 120.0,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage('assets/teacher-2.png'),
+                                image: AssetImage('assets/teacher2.png'),
                                 fit: BoxFit.cover),
                             color: Colors.transparent,
                             borderRadius:
