@@ -1,5 +1,7 @@
 import 'dart:ui';
+import 'package:attendme/pages/attendeelist.dart';
 import 'package:attendme/pages/login.dart';
+import 'package:attendme/pages/viewattendance.dart';
 import 'package:flutter/material.dart';
 import 'package:attendme/pages/signup.dart';
 import 'package:attendme/pages/admin_dashboard.dart';
@@ -46,6 +48,7 @@ class App extends StatelessWidget {
         '/studentdashboard': (context) => StudentDashboard(),
         '/studentsignup': (context) => studentsignup(),
         '/teachersignup': (context) => teachersignup(),
+        '/viewattendance': (context) => ViewAttendance(),
       },
     );
   }

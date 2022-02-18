@@ -89,7 +89,9 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
             Container(
               margin: EdgeInsets.only(top: 20.0),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/viewattendance');
+                },
                 child: Text(
                   'View Attendee List',
                   style: TextStyle(
