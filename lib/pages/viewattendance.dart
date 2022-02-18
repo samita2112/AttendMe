@@ -21,14 +21,14 @@ class _ViewAttendanceState extends State<ViewAttendance> {
   String type = "";
   final _formkey = GlobalKey<FormState>();
   List<DropdownMenuItem<String>> divisionItems = [
-    DropdownMenuItem(child: Text("D12A"), value: "d12a"),
-    DropdownMenuItem(child: Text("D12B"), value: "d12b"),
-    DropdownMenuItem(child: Text("D12C"), value: "d12c"),
+    DropdownMenuItem(child: Text("D12A"), value: "D12A"),
+    DropdownMenuItem(child: Text("D12B"), value: "D12B"),
+    DropdownMenuItem(child: Text("D12C"), value: "D12C"),
   ];
   List<DropdownMenuItem<String>> subjectItems = [
-    DropdownMenuItem(child: Text("CSS"), value: "css"),
-    DropdownMenuItem(child: Text("AI"), value: "ai"),
-    DropdownMenuItem(child: Text("AOA"), value: "aoa"),
+    DropdownMenuItem(child: Text("CSS"), value: "CSS"),
+    DropdownMenuItem(child: Text("AI"), value: "AI"),
+    DropdownMenuItem(child: Text("AOA"), value: "AOA"),
   ];
 
   @override

@@ -45,32 +45,39 @@ class AttendeeList extends StatelessWidget {
             // backgroundColor: Colors.red[500],
           ),
           backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * 1,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/title.png"),
-                        fit: BoxFit.cover)),
-                child: Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.85,
-                    height: MediaQuery.of(context).size.height * 0.7,
-                    decoration: BoxDecoration(
-                      // image:DecorationImage(
-                      // image: FileImage(File(imagePath)),
-                      // fit: BoxFit.cover),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                    ),
-                    child: SingleChildScrollView(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.85,
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        child: FetchAttendeeList(
-                            division: division, subject: subject, date: date),
+          body: Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.height * 1,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/title.png"),
+                      fit: BoxFit.cover)),
+              child: Center(
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  decoration: BoxDecoration(
+                    // image:DecorationImage(
+                    // image: FileImage(File(imagePath)),
+                    // fit: BoxFit.cover),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      height: MediaQuery.of(context).size.height * 0.80,
+                      padding: EdgeInsets.all(35),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Subject: $subject"),
+                          Text("Division: $division"),
+                          Text("Date: $date"),
+                          FetchAttendeeList(
+                              division: division, subject: subject, date: date),
+                        ],
                       ),
                     ),
                   ),
@@ -100,16 +107,45 @@ class FetchAttendeeList extends StatelessWidget {
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text("Absent");
-          return ListView(children: getAttendanceList(snapshot));
+          return Padding(
+            padding: const EdgeInsets.only(top:15.0),
+            child: Table(children:[
+              TableRow(
+                children:[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Rollno"),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Name"),
+                  )
+                  ]
+                  ),
+            ...getAttendanceList(snapshot)],
+            border: TableBorder.all(  
+                          color: Colors.black26,  
+                          style: BorderStyle.solid,  
+                          width: 1),  ),
+          );
         });
   }
 
   getAttendanceList(AsyncSnapshot<QuerySnapshot> snapshot) {
     return snapshot.data?.docs.map((doc) {
-      print(doc.toString());
-      return ListTile(
-          title: new Text(doc["Name"]),
-          subtitle: new Text(doc["Rollno"].toString()));
+      return TableRow(
+        children:[
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Text(doc["Rollno"],),
+           ),
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Text(doc["Name"],
+             ),
+           )
+           ]
+           );
     }).toList();
   }
 }
