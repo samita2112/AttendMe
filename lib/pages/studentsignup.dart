@@ -143,9 +143,9 @@ class _studentsignupState extends State<studentsignup> {
                                 ),
                               ),
                               // isExpanded: true,
-                              
+
                               validator: (String? newValue) =>
-                                  newValue==null ? 'Enter Year' : null,
+                                  newValue == null ? 'Enter Year' : null,
                               hint: Text('Year'),
                               value: year,
                               items: yearItems),
@@ -165,7 +165,7 @@ class _studentsignupState extends State<studentsignup> {
                               ),
                               // isExpanded: true,
                               validator: (String? newValue) =>
-                                  newValue==null ? 'Enter Branch' : null,
+                                  newValue == null ? 'Enter Branch' : null,
                               hint: Text('Branch'),
                               value: branch,
                               items: branchItems),
@@ -178,8 +178,7 @@ class _studentsignupState extends State<studentsignup> {
                                 });
                               },
                               validator: (String? newValue) =>
-                                  newValue==null ? 'Enter Division' : null,
-                              
+                                  newValue == null ? 'Enter Division' : null,
                               decoration: InputDecoration(
                                 icon: Icon(
                                   Icons.group,
@@ -263,6 +262,9 @@ class _studentsignupState extends State<studentsignup> {
                                 if (result == null) {
                                   setState(() =>
                                       error = 'Please enter a valid Email Id');
+                                } else {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/login');
                                 }
                               }
                             },
