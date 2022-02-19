@@ -2,12 +2,23 @@ import 'package:attendme/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class AttendeeList extends StatelessWidget {
-  final db = AuthService().db;
-  final _auth = AuthService();
+class AttendeeList extends StatefulWidget {
   final division, subject, date;
 
   AttendeeList(
+      {required this.division, required this.subject, required this.date});
+
+  @override
+  State<AttendeeList> createState() =>
+      _AttendeeListState(division: division, subject: subject, date: date);
+}
+
+class _AttendeeListState extends State<AttendeeList> {
+  final db = AuthService().db;
+
+  final division, subject, date;
+  final _auth = AuthService();
+  _AttendeeListState(
       {required this.division, required this.subject, required this.date});
   @override
   Widget build(BuildContext context) {
@@ -57,7 +68,7 @@ class AttendeeList extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Subject: $subject",
+                          "Subject: ${widget.subject}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16.5),
                         ),
@@ -65,7 +76,7 @@ class AttendeeList extends StatelessWidget {
                           height: 3,
                         ),
                         Text(
-                          "Division: $division",
+                          "Division: ${widget.division}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16.5),
                         ),
@@ -73,12 +84,14 @@ class AttendeeList extends StatelessWidget {
                           height: 3,
                         ),
                         Text(
-                          "Date: $date",
+                          "Date: ${widget.date}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16.5),
                         ),
                         FetchAttendeeList(
-                            division: division, subject: subject, date: date),
+                            division: widget.division,
+                            subject: widget.subject,
+                            date: widget.date),
                       ],
                     ),
                   ),
@@ -90,21 +103,33 @@ class AttendeeList extends StatelessWidget {
   }
 }
 
-class FetchAttendeeList extends StatelessWidget {
-  final db = AuthService().db;
+class FetchAttendeeList extends StatefulWidget {
   final division, subject, date;
 
   FetchAttendeeList(
       {required this.division, required this.subject, required this.date});
+
+  @override
+  State<FetchAttendeeList> createState() =>
+      _FetchAttendeeListState(division: division, subject: subject, date: date);
+}
+
+class _FetchAttendeeListState extends State<FetchAttendeeList> {
+  final db = AuthService().db;
+  bool ascending = true;
+  final division, subject, date;
+  _FetchAttendeeListState(
+      {required this.division, required this.subject, required this.date});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: db
             .collection("divisions")
-            .doc(division)
+            .doc(widget.division)
             .collection("subjects")
-            .doc(subject)
-            .collection(date)
+            .doc(widget.subject)
+            .collection(widget.date)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text("Absent");
@@ -116,10 +141,14 @@ class FetchAttendeeList extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               dataRowHeight: 38,
               sortColumnIndex: 0,
-              sortAscending: true,
+              sortAscending: ascending,
               columns: [
                 DataColumn(
-                    // onSort: (columnIndex, ascending) => ,
+                    onSort: (columnIndex, ascending) {
+                      setState(() {
+                        this.ascending = ascending;
+                      });
+                    },
                     numeric: true,
                     label: Text('RollNo',
                         style: TextStyle(
