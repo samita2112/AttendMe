@@ -65,7 +65,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               child: TextButton(
                 onPressed: () {},
                 child: Text(
-                  'Add Teacher',
+                  'Add Teachers',
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -85,7 +85,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               child: TextButton(
                 onPressed: () {},
                 child: Text(
-                  'Add Class',
+                  'Add Classes',
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -105,7 +105,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               child: TextButton(
                 onPressed: () {},
                 child: Text(
-                  'Add Student',
+                  'Add Students',
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -160,27 +160,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 30.0),
-              child: TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Set Class on NFC',
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      EdgeInsets.all(15.0)),
-                  fixedSize:
-                      MaterialStateProperty.all<Size>(Size.fromWidth(300.0)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green[100]!),
-                ),
-              ),
-            )
-          ],
+            ],
         ),
       ),
     );
