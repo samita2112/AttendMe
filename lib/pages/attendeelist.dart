@@ -129,7 +129,7 @@ class _FetchAttendeeListState extends State<FetchAttendeeList> {
             .doc(widget.division)
             .collection("subjects")
             .doc(widget.subject)
-            .collection(widget.date)
+            .collection(widget.date).orderBy('Rollno',descending:false)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text("Absent");
@@ -140,15 +140,8 @@ class _FetchAttendeeListState extends State<FetchAttendeeList> {
                   color: Colors.cyan[600],
                   borderRadius: BorderRadius.circular(10)),
               dataRowHeight: 38,
-              sortColumnIndex: 0,
-              sortAscending: ascending,
               columns: [
                 DataColumn(
-                    onSort: (columnIndex, ascending) {
-                      setState(() {
-                        this.ascending = ascending;
-                      });
-                    },
                     numeric: true,
                     label: Text('RollNo',
                         style: TextStyle(
